@@ -25,11 +25,14 @@
             padding: 0;
             box-sizing: border-box;
             
-            /* The magic lines to stop text selection */
+            /* Prevent text selection so spam clicking feels like a game */
             -webkit-user-select: none; /* Chrome, Safari, Opera */
             -moz-user-select: none;    /* Firefox */
             -ms-user-select: none;     /* Internet Explorer/Edge */
             user-select: none;         /* Standard */
+            
+            /* Remove blue highlight on mobile tap */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -75,7 +78,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
-            cursor: default; /* Arrow cursor even on text */
+            cursor: default; 
         }
 
         header p {
@@ -104,7 +107,16 @@
             perspective: 1000px;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.1s; /* Faster transform for the bump */
+        }
+
+        /* --- THE "BUMP" EFFECT (Active/Click State) --- */
+        .project-card:active {
+            /* Scale down to 95% to look "pressed" */
+            transform: scale(0.95) !important; 
+            /* Dim the shadow to look closer to the screen */
+            box-shadow: 0 0 10px rgba(0,0,0,0.5) !important;
+            border-color: rgba(255,255,255,0.1) !important;
         }
 
         .card-content {
@@ -119,6 +131,8 @@
             background: rgba(255, 255, 255, 0.03); 
             backdrop-filter: blur(5px);
             transform: translateZ(40px);
+            /* Ensure clicks pass through to the card link */
+            pointer-events: none; 
         }
 
         .card-icon {
@@ -139,19 +153,29 @@
             line-height: 1.4;
         }
 
-        /* --- Hover Effects --- */
-        .card-about:hover { border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 247, 255, 0.3); }
-        .card-about .card-icon { color: var(--neon-cyan); }
+        /* --- Hover Effects (Desktop Only) --- */
+        /* We wrap hover in a media query so it doesn't get sticky on mobile */
+        @media (hover: hover) {
+            .card-about:hover { border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 247, 255, 0.3); }
+            .card-about .card-icon { color: var(--neon-cyan); }
 
-        .card-bst:hover { border-color: var(--neon-lime); box-shadow: 0 0 40px rgba(57, 255, 20, 0.3); }
-        .card-bst .card-icon { color: var(--neon-lime); }
+            .card-bst:hover { border-color: var(--neon-lime); box-shadow: 0 0 40px rgba(57, 255, 20, 0.3); }
+            .card-bst .card-icon { color: var(--neon-lime); }
 
-        .card-aaron:hover { border-color: var(--neon-pink); box-shadow: 0 0 40px rgba(255, 0, 200, 0.3); }
-        .card-aaron .card-icon { color: var(--neon-pink); }
+            .card-aaron:hover { border-color: var(--neon-pink); box-shadow: 0 0 40px rgba(255, 0, 200, 0.3); }
+            .card-aaron .card-icon { color: var(--neon-pink); }
 
-        .project-card:hover .card-icon {
-            transform: scale(1.1) translateZ(50px);
-            text-shadow: 0 0 20px currentColor;
+            .project-card:hover .card-icon {
+                transform: scale(1.1) translateZ(50px);
+                text-shadow: 0 0 20px currentColor;
+            }
+        }
+        
+        /* On Mobile, just give them static colors so they look nice without hover */
+        @media (hover: none) {
+            .card-about .card-icon { color: var(--neon-cyan); }
+            .card-bst .card-icon { color: var(--neon-lime); }
+            .card-aaron .card-icon { color: var(--neon-pink); }
         }
 
     </style>
@@ -195,21 +219,26 @@
 
     <script>
         // --- 1. 3D Tilt Logic ---
-        const cards = document.querySelectorAll('.project-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                const multiplier = 15;
-                const rotateX = (y / (rect.height / 2)) * -multiplier;
-                const rotateY = (x / (rect.width / 2)) * multiplier;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+        // Only run tilt logic if device has a mouse (Desktop)
+        if (window.matchMedia("(hover: hover)").matches) {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    const multiplier = 15;
+                    const rotateX = (y / (rect.height / 2)) * -multiplier;
+                    const rotateY = (x / (rect.width / 2)) * multiplier;
+                    
+                    // Note: We don't apply this if the card is currently being clicked (:active handles that in CSS)
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)`;
+                });
             });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)`;
-            });
-        });
+        }
 
         // --- 2. Background System ---
         const canvas = document.getElementById('bg-canvas');
@@ -218,7 +247,7 @@
         canvas.height = window.innerHeight;
 
         let particlesArray = [];
-        let explosionsArray = []; // Store the click bursts here
+        let explosionsArray = []; 
 
         let mouse = {
             x: null,
@@ -287,19 +316,16 @@
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                // Random explosion direction and speed
                 this.speedX = Math.random() * 6 - 3; 
                 this.speedY = Math.random() * 6 - 3;
-                this.size = Math.random() * 5 + 2; // Start big
+                this.size = Math.random() * 5 + 2; 
                 
-                // Randomly pick a neon color
                 const colors = ['#00f7ff', '#ff00c8', '#39ff14', '#ffffff'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                // Shrink over time
                 if (this.size > 0.1) this.size -= 0.1;
             }
             draw() {
@@ -320,7 +346,6 @@
 
         function animateParticles() {
             requestAnimationFrame(animateParticles);
-            // Use slight trail effect
             ctx.clearRect(0, 0, canvas.width, canvas.height); 
 
             // Handle Background Particles
@@ -328,7 +353,6 @@
                 particlesArray[i].update();
                 particlesArray[i].draw();
 
-                // Connect particles logic
                 for (let j = i; j < particlesArray.length; j++) {
                     let dx = particlesArray[i].x - particlesArray[j].x;
                     let dy = particlesArray[i].y - particlesArray[j].y;
@@ -349,7 +373,6 @@
                 explosionsArray[i].update();
                 explosionsArray[i].draw();
                 
-                // Remove particles that are too small
                 if (explosionsArray[i].size <= 0.2) {
                     explosionsArray.splice(i, 1);
                     i--;
