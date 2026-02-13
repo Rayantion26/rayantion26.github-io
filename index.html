@@ -19,6 +19,7 @@
             --neon-cyan: #00f7ff;
             --neon-pink: #ff00c8;
             --neon-lime: #39ff14;
+            --neon-white: #ffffff;
         }
 
         /* UNIVERSAL RESET & UNSELECTABLE TEXT */
@@ -307,9 +308,135 @@
                 color: var(--neon-pink);
             }
 
-            ,
-            card-jastipaaron .card-icon {
+            .card-jastipaaron .card-icon {
                 color: var(--neon-white);
+            }
+        }
+
+        /* n8n Chat Widget — ensure it renders above canvas & content */
+        #n8n-chat {
+            position: fixed !important;
+            z-index: 9999 !important;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* n8n Chat Custom Overrides — using the widget's own CSS variables */
+        #n8n-chat {
+            /* Dark backgrounds */
+            --chat--color-white: #13132a;
+            --chat--color-light: #050510;
+            --chat--color-light-shade-50: #1a1a3a;
+            --chat--color-light-shade-100: #2a2a4a;
+            --chat--color-dark: #ffffff;
+            --chat--color-medium: #3a3a5a;
+
+            /* Body & footer */
+            --chat--body--background: #050510;
+            --chat--footer--background: #0d0d20;
+            --chat--footer--color: #ffffff;
+
+            /* Header */
+            --chat--header--background: rgba(19, 19, 42, 0.95);
+            --chat--header--color: #ffffff;
+
+            /* Bot messages */
+            --chat--message--bot--background: rgba(19, 19, 42, 0.8);
+            --chat--message--bot--color: #ffffff;
+            --chat--message--bot--border: 1px solid rgba(0, 247, 255, 0.15);
+
+            /* User messages */
+            --chat--message--user--background: rgba(0, 247, 255, 0.15);
+            --chat--message--user--color: #ffffff;
+
+            /* Input area */
+            --chat--input--background: #13132a;
+            --chat--input--text-color: #ffffff;
+            --chat--input--send--button--background: #13132a;
+            --chat--input--send--button--color: #00f7ff;
+
+            /* Window border */
+            --chat--window--border: 1px solid #00f7ff;
+
+            /* Toggle button */
+            --chat--toggle--background: #00f7ff;
+            --chat--toggle--hover--background: #00d4e0;
+            --chat--toggle--active--background: #00b8c4;
+            --chat--toggle--color: #050510;
+
+            /* Typing indicator */
+            --chat--color-typing: #a0a0c0;
+        }
+
+        .n8n-chat-branding,
+        .chat-powered-by {
+            display: none !important;
+        }
+
+        .chat-window {
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2) !important;
+            font-family: 'Roboto', sans-serif !important;
+        }
+
+        .chat-header {
+            font-family: 'Orbitron', sans-serif !important;
+            border-bottom: 1px solid #00f7ff !important;
+        }
+
+        .chat-footer {
+            border-top: 1px solid rgba(0, 247, 255, 0.3) !important;
+        }
+
+        /* Hide default typing indicator */
+        .chat-message-typing {
+            display: none !important;
+        }
+
+        /* Custom neon loading animation */
+        .neon-loader {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            max-width: fit-content;
+            margin-bottom: 8px;
+            background: rgba(19, 19, 42, 0.8);
+            border: 1px solid rgba(0, 247, 255, 0.15);
+            border-radius: 4px;
+            border-bottom-left-radius: 0;
+        }
+
+        .neon-loader .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00f7ff;
+            box-shadow: 0 0 6px #00f7ff, 0 0 12px rgba(0, 247, 255, 0.4);
+            animation: neonPulse 1.2s ease-in-out infinite;
+        }
+
+        .neon-loader .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .neon-loader .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes neonPulse {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+                box-shadow: 0 0 4px rgba(0, 247, 255, 0.2);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 10px #00f7ff, 0 0 20px rgba(0, 247, 255, 0.5);
             }
         }
     </style>
@@ -537,11 +664,14 @@
     </script>
 
     <!-- n8n Chat Widget -->
-    <link href="https://cdn.n8n.io/chat/style.css" rel="stylesheet" />
+    <div id="n8n-chat"></div>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
     <script type="module">
-        import { createChat } from 'https://cdn.n8n.io/chat/chat.bundle.es.js';
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
         createChat({
-            webhookUrl: 'https://n8n.rayantion.me/webhook/e590dd72-7948-4576-9ccd-bfaee349c8f5/chat',
+            webhookUrl: 'https://n8n.rayantion.me/webhook/db3ba2ed-cde4-4857-908e-c4462412cd62/chat',
+            target: '#n8n-chat',
             mode: 'window',
             chatInputKey: 'chatInput',
             chatSessionKey: 'sessionId',
@@ -569,7 +699,7 @@
                     borderColor: 'transparent',
                 },
                 chatWindow: {
-                    backgroundColor: '#0d0d20',
+                    backgroundColor: '#050510',
                     textColor: '#ffffff',
                     inputBackgroundColor: '#13132a',
                     inputTextColor: '#ffffff',
@@ -587,6 +717,55 @@
                 },
             },
         });
+
+        // Custom neon loading indicator
+        (function () {
+            function createLoader() {
+                const loader = document.createElement('div');
+                loader.className = 'neon-loader';
+                loader.id = 'neon-chat-loader';
+                loader.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+                return loader;
+            }
+
+            function showLoader(container) {
+                removeLoader();
+                const loader = createLoader();
+                container.appendChild(loader);
+                container.scrollTop = container.scrollHeight;
+            }
+
+            function removeLoader() {
+                const existing = document.getElementById('neon-chat-loader');
+                if (existing) existing.remove();
+            }
+
+            // Wait for chat widget to mount, then observe
+            const check = setInterval(() => {
+                const msgList = document.querySelector('.chat-messages-list');
+                if (!msgList) return;
+                clearInterval(check);
+
+                const observer = new MutationObserver((mutations) => {
+                    for (const m of mutations) {
+                        for (const node of m.addedNodes) {
+                            if (!(node instanceof HTMLElement)) continue;
+                            // User sent a message
+                            if (node.classList.contains('chat-message-from-user')) {
+                                showLoader(msgList);
+                            }
+                            // Bot replied
+                            if (node.classList.contains('chat-message-from-bot') &&
+                                !node.classList.contains('chat-message-typing')) {
+                                removeLoader();
+                            }
+                        }
+                    }
+                });
+
+                observer.observe(msgList, { childList: true, subtree: false });
+            }, 500);
+        })();
     </script>
 </body>
 
