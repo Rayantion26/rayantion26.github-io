@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rayantion.me - Project Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -39,15 +41,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            overflow-y: auto;   /* Allow vertical scroll if needed */
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+            overflow-y: auto;
+            /* Allow vertical scroll if needed */
             position: relative;
         }
 
         /* --- ANIMATIONS --- */
         @keyframes deepFade {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         @keyframes fadeInUp {
@@ -55,6 +64,7 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             100% {
                 opacity: 1;
                 transform: translateY(0);
@@ -63,14 +73,15 @@
 
         /* Background Particle Canvas */
         #bg-canvas {
-            position: fixed; /* Fixed so it doesn't scroll away on small screens */
+            position: fixed;
+            /* Fixed so it doesn't scroll away on small screens */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; 
-            opacity: 0; 
-            animation: deepFade 2s ease-out forwards; 
+            z-index: -1;
+            opacity: 0;
+            animation: deepFade 2s ease-out forwards;
         }
 
         .main-container {
@@ -80,15 +91,15 @@
             width: 100%;
             max-width: 1200px;
             /* Radial gradient helps text pop against stars */
-            background: radial-gradient(circle, rgba(5,5,16,0.6) 0%, rgba(5,5,16,0) 70%); 
+            background: radial-gradient(circle, rgba(5, 5, 16, 0.6) 0%, rgba(5, 5, 16, 0) 70%);
             pointer-events: none;
-            
-            opacity: 0; 
+
+            opacity: 0;
             animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            animation-delay: 0.3s; 
+            animation-delay: 0.3s;
         }
 
-        .main-container > * {
+        .main-container>* {
             pointer-events: auto;
         }
 
@@ -99,7 +110,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
-            cursor: default; 
+            cursor: default;
         }
 
         header p {
@@ -114,7 +125,8 @@
             gap: 30px;
             justify-content: center;
             flex-wrap: wrap;
-            padding-bottom: 20px; /* Space for scrolling on mobile */
+            padding-bottom: 20px;
+            /* Space for scrolling on mobile */
         }
 
         .project-card {
@@ -135,10 +147,11 @@
         /* --- MOBILE OPTIMIZATION MEDIA QUERY --- */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 2rem; /* Smaller title */
+                font-size: 2rem;
+                /* Smaller title */
                 margin-top: 20px;
             }
-            
+
             header p {
                 font-size: 1rem;
                 margin-bottom: 30px;
@@ -152,26 +165,32 @@
             }
 
             .project-card {
-                width: 90%; /* Fluid width for mobile */
-                max-width: 340px; /* Don't get too wide */
-                height: 120px; /* Shorter cards on mobile (horizontal look) */
+                width: 90%;
+                /* Fluid width for mobile */
+                max-width: 340px;
+                /* Don't get too wide */
+                height: 120px;
+                /* Shorter cards on mobile (horizontal look) */
                 display: flex;
-                align-items: center; /* Center content vertically */
+                align-items: center;
+                /* Center content vertically */
             }
 
             /* Adjust internal card layout for mobile landscape-ish look */
             .card-content {
-                flex-direction: row !important; /* Icon left, text right */
+                flex-direction: row !important;
+                /* Icon left, text right */
                 text-align: left;
                 gap: 20px;
                 padding: 15px 25px;
             }
 
             .card-icon {
-                font-size: 2.5rem !important; /* Smaller icon */
+                font-size: 2.5rem !important;
+                /* Smaller icon */
                 margin-bottom: 0 !important;
             }
-            
+
             .text-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -181,7 +200,7 @@
                 font-size: 1.3rem;
                 margin-bottom: 5px;
             }
-            
+
             .project-card p {
                 font-size: 0.85rem;
                 line-height: 1.2;
@@ -190,24 +209,27 @@
 
         /* --- THE "BUMP" EFFECT (Active/Click State) --- */
         .project-card:active {
-            transform: scale(0.95) !important; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.5) !important;
-            border-color: rgba(255,255,255,0.1) !important;
+            transform: scale(0.95) !important;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
         }
 
         .card-content {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             border-radius: 15px;
-            background: rgba(255, 255, 255, 0.03); 
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(5px);
             transform: translateZ(40px);
-            pointer-events: none; 
+            pointer-events: none;
         }
 
         .card-icon {
@@ -230,33 +252,69 @@
 
         /* --- Hover Effects (Desktop Only) --- */
         @media (hover: hover) {
-            .card-about:hover { border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 247, 255, 0.3); }
-            .card-about .card-icon { color: var(--neon-cyan); }
+            .card-about:hover {
+                border-color: var(--neon-cyan);
+                box-shadow: 0 0 40px rgba(0, 247, 255, 0.3);
+            }
 
-            .card-bst:hover { border-color: var(--neon-lime); box-shadow: 0 0 40px rgba(57, 255, 20, 0.3); }
-            .card-bst .card-icon { color: var(--neon-lime); }
+            .card-about .card-icon {
+                color: var(--neon-cyan);
+            }
 
-            .card-aaron:hover { border-color: var(--neon-pink); box-shadow: 0 0 40px rgba(255, 0, 200, 0.3); }
-            .card-aaron .card-icon { color: var(--neon-pink); }
+            .card-bst:hover {
+                border-color: var(--neon-lime);
+                box-shadow: 0 0 40px rgba(57, 255, 20, 0.3);
+            }
 
-            .card-jastipaaron:hover { border-color: var(--neon-white); box-shadow: 0 0 40px rgba(255, 255, 255, 0.3); }
-            .card-jastipaaron .card-icon { color: var(--neon-white); }
+            .card-bst .card-icon {
+                color: var(--neon-lime);
+            }
+
+            .card-aaron:hover {
+                border-color: var(--neon-pink);
+                box-shadow: 0 0 40px rgba(255, 0, 200, 0.3);
+            }
+
+            .card-aaron .card-icon {
+                color: var(--neon-pink);
+            }
+
+            .card-jastipaaron:hover {
+                border-color: var(--neon-white);
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+            }
+
+            .card-jastipaaron .card-icon {
+                color: var(--neon-white);
+            }
 
             .project-card:hover .card-icon {
                 transform: scale(1.1) translateZ(50px);
                 text-shadow: 0 0 20px currentColor;
             }
         }
-        
-        @media (hover: none) {
-            .card-about .card-icon { color: var(--neon-cyan); }
-            .card-bst .card-icon { color: var(--neon-lime); }
-            .card-aaron .card-icon { color: var(--neon-pink); }
-            ,card-jastipaaron .card-icon { color: var(--neon-white);}
-        }
 
+        @media (hover: none) {
+            .card-about .card-icon {
+                color: var(--neon-cyan);
+            }
+
+            .card-bst .card-icon {
+                color: var(--neon-lime);
+            }
+
+            .card-aaron .card-icon {
+                color: var(--neon-pink);
+            }
+
+            ,
+            card-jastipaaron .card-icon {
+                color: var(--neon-white);
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <canvas id="bg-canvas"></canvas>
@@ -297,7 +355,7 @@
                     </div>
                 </div>
             </a>
-            
+
             <a href="/jastipaaron/" class="project-card card-jastipaaron" data-tilt>
                 <div class="card-content">
                     <i class="card-icon fa-solid fa-ghost"></i>
@@ -323,7 +381,7 @@
                     const multiplier = 15;
                     const rotateX = (y / (rect.height / 2)) * -multiplier;
                     const rotateY = (x / (rect.width / 2)) * multiplier;
-                    
+
                     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
                 });
                 card.addEventListener('mouseleave', () => {
@@ -339,7 +397,7 @@
         canvas.height = window.innerHeight;
 
         let particlesArray = [];
-        let explosionsArray = []; 
+        let explosionsArray = [];
 
         let mouse = {
             x: null,
@@ -347,13 +405,13 @@
             radius: 150
         }
 
-        window.addEventListener('mousemove', function(event){
+        window.addEventListener('mousemove', function (event) {
             mouse.x = event.x;
             mouse.y = event.y;
         });
 
-        window.addEventListener('click', function(event){
-            for(let i=0; i<20; i++){
+        window.addEventListener('click', function (event) {
+            for (let i = 0; i < 20; i++) {
                 explosionsArray.push(new Explosion(event.x, event.y));
             }
         });
@@ -381,11 +439,11 @@
 
                 let dx = mouse.x - this.x;
                 let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-                
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
                 if (distance < mouse.radius) {
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(0, 247, 255, ${1 - distance/mouse.radius})`; 
+                    ctx.strokeStyle = `rgba(0, 247, 255, ${1 - distance / mouse.radius})`;
                     ctx.lineWidth = 1;
                     ctx.moveTo(this.x, this.y);
                     ctx.lineTo(mouse.x, mouse.y);
@@ -404,10 +462,10 @@
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.speedX = Math.random() * 6 - 3; 
+                this.speedX = Math.random() * 6 - 3;
                 this.speedY = Math.random() * 6 - 3;
-                this.size = Math.random() * 5 + 2; 
-                
+                this.size = Math.random() * 5 + 2;
+
                 const colors = ['#00f7ff', '#ff00c8', '#39ff14', '#ffffff'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
             }
@@ -429,9 +487,9 @@
             // OPTIMIZATION: Check if screen is small (Mobile)
             const isMobile = window.innerWidth < 768;
             // Use fewer particles on mobile to save battery
-            const densityDivider = isMobile ? 25000 : 10000; 
-            
-            const numberOfParticles = (canvas.height * canvas.width) / densityDivider; 
+            const densityDivider = isMobile ? 25000 : 10000;
+
+            const numberOfParticles = (canvas.height * canvas.width) / densityDivider;
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
@@ -439,7 +497,7 @@
 
         function animateParticles() {
             requestAnimationFrame(animateParticles);
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Particles
             for (let i = 0; i < particlesArray.length; i++) {
@@ -449,10 +507,10 @@
                 for (let j = i; j < particlesArray.length; j++) {
                     let dx = particlesArray[i].x - particlesArray[j].x;
                     let dy = particlesArray[i].y - particlesArray[j].y;
-                    let distance = Math.sqrt(dx*dx + dy*dy);
+                    let distance = Math.sqrt(dx * dx + dy * dy);
                     if (distance < 100) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(100, 100, 255, ${1 - distance/100})`; 
+                        ctx.strokeStyle = `rgba(100, 100, 255, ${1 - distance / 100})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -465,7 +523,7 @@
             for (let i = 0; i < explosionsArray.length; i++) {
                 explosionsArray[i].update();
                 explosionsArray[i].draw();
-                
+
                 if (explosionsArray[i].size <= 0.2) {
                     explosionsArray.splice(i, 1);
                     i--;
@@ -477,5 +535,59 @@
         animateParticles();
 
     </script>
+
+    <!-- n8n Chat Widget -->
+    <link href="https://cdn.n8n.io/chat/style.css" rel="stylesheet" />
+    <script type="module">
+        import { createChat } from 'https://cdn.n8n.io/chat/chat.bundle.es.js';
+        createChat({
+            webhookUrl: 'https://n8n.rayantion.me/webhook/e590dd72-7948-4576-9ccd-bfaee349c8f5/chat',
+            mode: 'window',
+            chatInputKey: 'chatInput',
+            chatSessionKey: 'sessionId',
+            metadata: {},
+            showWelcomeScreen: false,
+            defaultLanguage: 'en',
+            initialMessages: [
+                'Hey there! 👋',
+                'I\'m Rayantion\'s assistant. How can I help you?'
+            ],
+            i18n: {
+                en: {
+                    title: 'Rayantion Bot 🤖',
+                    subtitle: 'Ask me anything about Rayantion\'s projects!',
+                    footer: '',
+                    getStarted: 'New Conversation',
+                    inputPlaceholder: 'Type your message...',
+                },
+            },
+            theme: {
+                button: {
+                    backgroundColor: '#00f7ff',
+                    iconColor: '#050510',
+                    size: '54',
+                    borderColor: 'transparent',
+                },
+                chatWindow: {
+                    backgroundColor: '#0d0d20',
+                    textColor: '#ffffff',
+                    inputBackgroundColor: '#13132a',
+                    inputTextColor: '#ffffff',
+                    titleColor: '#00f7ff',
+                    subtitleColor: '#a0a0c0',
+                    borderColor: '#1a1a3a',
+                },
+                userMessage: {
+                    backgroundColor: '#00f7ff',
+                    textColor: '#050510',
+                },
+                botMessage: {
+                    backgroundColor: '#13132a',
+                    textColor: '#ffffff',
+                },
+            },
+        });
+    </script>
 </body>
+
 </html>
