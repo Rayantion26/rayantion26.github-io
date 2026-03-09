@@ -289,10 +289,19 @@
                 color: var(--neon-white);
             }
 
+            .card-acdorm:hover {
+                border-color: #00bfff; /* Deep Sky Blue */
+                box-shadow: 0 0 40px rgba(0, 191, 255, 0.3);
+            }
+            .card-acdorm .card-icon {
+                color: #00bfff;
+            }
+
             .project-card:hover .card-icon {
                 transform: scale(1.1) translateZ(50px);
                 text-shadow: 0 0 20px currentColor;
             }
+            
         }
 
         @media (hover: none) {
@@ -310,6 +319,10 @@
 
             .card-jastipaaron .card-icon {
                 color: var(--neon-white);
+            }
+            
+            .card-acdorm .card-icon {
+                color: #00bfff;
             }
         }
 
@@ -557,6 +570,17 @@
                     </div>
                 </div>
             </a>
+
+            <a href="/acdorm/" class="project-card card-acdorm" data-tilt>
+                <div class="card-content">
+                    <i class="card-icon fa-solid fa-snowflake"></i>
+                    <div class="text-wrapper">
+                        <h2>Jieren Dorm AC Credit Check</h2>
+                        <p>Monitor your remaining air conditioning credits for the dorm.</p>
+                    </div>
+                </div>
+            </a>
+            
         </div>
     </main>
 
